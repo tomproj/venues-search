@@ -1,4 +1,4 @@
-package com.github.tomproj.venues_search;
+package com.github.tomproj.venues_search.foursquare;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
@@ -48,7 +48,7 @@ import wiremock.org.eclipse.jetty.http.HttpStatus;
         "foursquare.limit=99",
         "hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds=5000"
         })
-public class VenuesSearchFoursquareClientTest {
+public class FoursquareClientTest {
 
     private static final String LIMIT_TEST = "99";
     private static final String VERSION_NUMBER_TEST = "version_number_test";
