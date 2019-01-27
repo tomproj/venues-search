@@ -17,9 +17,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Spy;
+import org.springframework.http.HttpStatus;
 
 import com.github.tomproj.venues_search.bean.Venue;
 import com.github.tomproj.venues_search.bean.VenuesSearchResponse;
+import com.github.tomproj.venues_search.exception.VenuesSearchBadRequestException;
+import com.github.tomproj.venues_search.exception.VenuesSearchException;
 import com.github.tomproj.venues_search.foursquare.FoursquareClient;
 import com.github.tomproj.venues_search.foursquare.FoursquareConstants;
 import com.github.tomproj.venues_search.foursquare.bean.FoursquareCategory;
@@ -29,6 +32,8 @@ import com.github.tomproj.venues_search.foursquare.bean.FoursquareLocation;
 import com.github.tomproj.venues_search.foursquare.bean.FoursquareResponse;
 import com.github.tomproj.venues_search.foursquare.bean.FoursquareResponseContainer;
 import com.github.tomproj.venues_search.foursquare.bean.FoursquareVenue;
+
+import feign.FeignException;
 
 public class VenuesSearchServiceTest {
 
@@ -55,6 +60,9 @@ public class VenuesSearchServiceTest {
     @Mock private VenuesSearchResponse recommendedVenuesSearchResponseMock;
     @Mock private VenuesSearchResponse trendingVenuesSearchResponseMock;
     
+    @Mock private FeignException badRequestFeigExceptionMock;
+    @Mock private FeignException otherFeigExceptionMock;
+    
     @Before
     public void before() {
         testObj = new VenuesSearchService();
@@ -75,6 +83,8 @@ public class VenuesSearchServiceTest {
         when(foursquareLocationMock.getLat()).thenReturn(LATITUDE);
         when(foursquareLocationMock.getFormattedAddress()).thenReturn(FORMATTED_ADDRESS);
         when(foursquareCategoryMock.getName()).thenReturn(CATEGORY);
+        
+        when(badRequestFeigExceptionMock.status()).thenReturn(HttpStatus.BAD_REQUEST.value());
     }
     
     @Test
@@ -85,6 +95,20 @@ public class VenuesSearchServiceTest {
         
         VenuesSearchResponse result = testObj.searchVenues(PLACE, SECTION);
         assertEquals(venuesSearchResponseMock, result);
+    }
+    
+    @Test(expected=VenuesSearchBadRequestException.class)
+    public void shouldThrowBadRequestException() {
+        
+        when(foursquareClientMock.exploreVenues(PLACE, SECTION)).thenThrow(badRequestFeigExceptionMock);
+        testObj.searchVenues(PLACE, SECTION);
+    }
+    
+    @Test(expected=VenuesSearchException.class)
+    public void shouldThrowVenueSearchException() {
+        
+        when(foursquareClientMock.exploreVenues(PLACE, SECTION)).thenThrow(otherFeigExceptionMock);
+        testObj.searchVenues(PLACE, SECTION);
     }
     
     @Test

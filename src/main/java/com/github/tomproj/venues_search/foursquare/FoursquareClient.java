@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.github.tomproj.venues_search.foursquare.bean.FoursquareResponseContainer;
 
+/**
+ * Feign client used to make the calls to the Foursquare api in order to search for venues.
+ */
 @FeignClient(name="FoursquareClient", url="${foursquare.url}", configuration=FoursquareClientConfiguration.class)
 public interface FoursquareClient {
 

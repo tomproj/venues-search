@@ -135,7 +135,7 @@ public class FoursquareClientTest {
     @SuppressWarnings("resource")
     private String getExploreVenuesResponseString() {
         try (
-                InputStream inputStream = getClass().getResourceAsStream("foursquare_explore_venues_response.json");
+                InputStream inputStream = getClass().getResourceAsStream("/com/github/tomproj/venues_search/foursquare_explore_venues_response.json");
                 Scanner scanner = new Scanner(inputStream, "UTF-8").useDelimiter("\\A");) {
             return scanner.next();
         } 

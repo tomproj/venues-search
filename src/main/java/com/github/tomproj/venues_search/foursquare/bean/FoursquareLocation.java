@@ -2,6 +2,9 @@ package com.github.tomproj.venues_search.foursquare.bean;
 
 import java.util.List;
 
+/**
+ * This bean, part of the model of Fourquare contains data about the location of a venue.
+ */
 public class FoursquareLocation {
 
     private String address;

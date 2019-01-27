@@ -2,13 +2,31 @@ package com.github.tomproj.venues_search.bean;
 
 import java.util.List;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+/**
+ * Contains the information about a venue.
+ */
+@ApiModel(value="Venue", description="A venue part of the venues search results")
 public class Venue {
 
+    @ApiModelProperty("The id of the venue")
     private String id;
+    
+    @ApiModelProperty("The name of the venue")
     private String name;
+    
+    @ApiModelProperty("The category of the venue")
     private String category;
+    
+    @ApiModelProperty("The latitude of the venue")
     private double latitude;
+    
+    @ApiModelProperty("The longitude of the venue")
     private double longitude;
+    
+    @ApiModelProperty("The formatted address of the venue")
     private List<String> formattedAddress;
     
     public String getId() {
